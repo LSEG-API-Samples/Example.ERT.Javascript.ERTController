@@ -24,7 +24,7 @@ The source code presented in this project has been written by Refinitiv only for
 
 The ERTController components provide the ability to connect to the streaming services via a TREP (ADS) local deployment, within your Eikon desktop installation (future) or directly to EDP/ERT in the cloud.
 
-![Components](Platform.png)
+![Components](images/Platform.png)
 
 The components outlined below provide JavaScript applications to easily interface with the ERT streaming services in multiple ways.
 
