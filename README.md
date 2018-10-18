@@ -11,7 +11,7 @@
 * [Examples](#examples)
 
 ## <a id="overview"></a>Overview
-The ERT (Elektron RealTime) controller, formally TRWebSocketController, is a series of JavaScript interfaces used to manage communication to the ERT streaming services available within either the Elektron Data Platform (EDP), a locally deployed TREP environment or through your Eikon Desktop installation.  Delivering real-time market data to the browser, the JavaScript interface is designed as a reusable component that can be used in a variety of simple web-based applications and prototypes.  
+The ERT (Elektron RealTime) controller, formally [TRWebSocketController](https://github.com/TR-API-Samples/Example.WebSocketAPI.Javascript.TRWebSocketController), is a series of JavaScript interfaces used to manage communication to the ERT streaming services available within either the Elektron Data Platform (EDP), a locally deployed TREP environment or through your Eikon Desktop installation.  Delivering real-time market data to the browser, the JavaScript interface is designed as a reusable component that can be used in a variety of simple web-based applications and prototypes.  
 
 For any question related to this component, please use the Developer Community [Q&A Forum](https://community.developers.thomsonreuters.com).
 
