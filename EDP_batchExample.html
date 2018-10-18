@@ -1,0 +1,95 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <!-- Elektron WebSocket interface -->
+    <script type="text/javascript" src="ERTRESTController.js"></script>    
+    <script type="text/javascript" src="ERTWebSocketController.js"></script>
+</head>
+
+<body>
+<h1>Check browser console for output...</h1>
+
+<script>
+(function() 
+{
+    // EDP Authentication
+    let edpController = new ERTRESTController();
+    
+    // Define our ERT WebSocket interface
+    let ertController = new ERTWebSocketController();     
+
+    // Authenticate with EDP...
+    edpController.get_access_token({
+            'username': undefined,  // Username
+            'password': undefined,  // Password
+            'clientId': undefined   // AppKey
+    });      
+    
+    //***********************************************************************************
+    // ERTRESTController.onStatus
+    //
+    // Capture all ERTRESTController status messages.
+    // EDP/ERT uses OAuth 2.0 authentication and requires clients to use access tokens to 
+    // retrieve streaming content.  In addition, EDP/ERT requires clients to continuously 
+    // refresh the access token to continue uninterrupted service.  
+    //
+    // The following callback will capture the events related to retrieving and 
+    // continuously updating the tokens in order to provide the streaming interface these
+    // details to maintain uninterrupted service. 
+    //***********************************************************************************
+    edpController.onStatus((eventCode, msg) => {
+        let status = edpController.status;
+
+        switch (eventCode) {
+            //case status.getToken: // Get Access token from EDP (first authentication case)
+            //    edpController.setRefreshTimer();
+            //    console.log(`Authenticated to Elektron Real Time in Cloud on ...`);
+            //    break;
+            case status.getRefreshToken: // Get Access token form EDP (re-refresh Token case)
+                console.log("EDP Authentication Refresh success.  Refreshing ERT stream...");
+                ertController.refreshERT(msg);
+                break;
+            case status.getService: // Get Service Discovery information form EDP
+                // Connects to ERT in Cloud Elektron WebSocket server
+                ertController.connectERT(msg.hostList, msg.portList, msg.access_token);
+                break;
+            case status.authenError: // Get Authentication fail error form EDP
+                console.log("Elektron Real Time in Cloud authentication failed.", msg);
+                break;
+            case status.getServiceError: // Get Service Discovery fail error form EDP
+                console.log("Elektron Real Time in Cloud Service Discovery failed.", msg);
+                break;
+        }
+    });    
+    
+    ertController.onStatus(function(eventCode, msg) {
+        switch (eventCode) {                    
+            case this.status.connected:
+                // ERTWebSocketController first reports success then will automatically attempt to log in to the ERT WebSocket server.
+                console.log(`Successfully connected into the ERT WebSocket server: ${msg.server}:${msg.port}`);
+                break;
+                
+            case this.status.disconnected:
+                console.log(`Failed to connect to the ERT WebSocket server: ${msg.server}:${msg.port}`);
+                break;
+                
+            case this.status.loginResponse:
+                console.log("Login response: " + msg.State.Text);
+                if (this.loggedIn())
+                    this.requestData(["EUR=", "GBP="]);
+                break;
+                
+            default:
+                console.log(msg);
+                break;
+        }
+    }); 
+      
+    ertController.onMarketData(function(msg) {
+        console.log(msg);
+    });
+})();
+</script>
+</body>
+</html>

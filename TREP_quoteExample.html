@@ -1,0 +1,49 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <!-- Elektron WebSocket interface -->
+    <script type="text/javascript" src="ERTWebSocketController.js"></script>
+</head>
+
+<body>
+<h1>Check browser console for output...</h1>
+
+<script>
+(function() 
+{    
+    // Define our ERT WebSocket interface
+    let ertController = new ERTWebSocketController();     
+    
+    // Connect into the ERT streaming services via TREP...
+    ertController.connectADS("ewa", "15000", "user");
+    
+    ertController.onStatus(function(eventCode, msg) {
+        switch (eventCode) {                    
+            case this.status.connected:
+                // ERTWebSocketController first reports success then will automatically attempt to log in to the ERT WebSocket server.
+                console.log(`Successfully connected into the ERT WebSocket server: ${msg.server}:${msg.port}`);
+                break;
+                
+            case this.status.disconnected:
+                console.log(`Failed to connect to the ERT WebSocket server: ${msg.server}:${msg.port}`);
+                break;
+                
+            case this.status.loginResponse:
+                if (this.loggedIn())
+                    this.requestData("TRI.N");
+                break;
+                
+            default:
+                console.log(msg);
+                break;
+        }
+    }); 
+      
+    ertController.onMarketData(function(msg) {
+        console.log(msg);
+    });
+})();
+</script>
+</body>
+</html>
