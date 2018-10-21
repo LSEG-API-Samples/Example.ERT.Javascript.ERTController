@@ -52,7 +52,7 @@ Software components used:
 
 * [Elektron WebSocket API](https://developers.thomsonreuters.com/elektron/websocket-api-early-access) - Interface to access Elektron real-time market data. 
 
-* [Pako](https://www.npmjs.com/package/pako) (v1.0.6) - Nodejs-based ibrary used to decompress Elektron Machine Readable News (MRN) headlines and stories.  Applications utilizing the news capabilities offered within this interface must include the 'zlib.js' script within their HTML.
+* [Pako](https://www.npmjs.com/package/pako) (v1.0.6) - Nodejs-based library used to decompress Elektron Machine Readable News (MRN) headlines and stories.  Applications utilizing the news capabilities offered within this interface must include the 'zlib.js' script within their HTML.
 
     **Note**: The 'zlib.js' file was prepared by [browserfying](http://browserify.org/) the pako library.  This is a process to bring the capabilities of the node.js library to the browser.  For convenience and interest, I've included the node.js-based file called 'pako.js' which I used to create the 'zlib.js' package.  Refer to 'pako.js' file for general instructions as to how I did this.
 
@@ -104,7 +104,7 @@ To setup your environment to run the EDT/ERT examples, perform the following ste
 
 3. Configure your access within your specific example.  Refer to the section of code that requires the authentication details:
 
-   ```
+   ```javascript
    // Authenticate with EDP...
    edpController.get_access_token({
            'username': '<username>',
