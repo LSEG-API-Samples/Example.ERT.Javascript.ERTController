@@ -159,23 +159,30 @@ ERTRESTController.prototype.get_ERT_service = function (auth_obj) {
     this.xhr.send(JSON.stringify(data));
 
     this.xhr.onreadystatechange = () => {
-
         if (this.xhr.readyState === 4) {
             if (this.xhr.status == 200) {
                 let ERT_services = JSON.parse(this.xhr.responseText);
                 ERT_services['services'].forEach(element => {
-                    //if (element['location'].length === 1 && element['location'] == this._location) {
-                    //    this._hostList = element['endpoint'];
-                    //    this._portList = element['port'];
-                    //}
-                    if (!this._hotStandby) {
-                        if (element['location'].length === 2) {
+                    if (this._hostList.length === 0) {
+                        if (element['location'].length === 1 && element['location'] == this._location) {
                             this._hostList = element['endpoint'];
                             this._portList = element['port'];
                             return;
                         }
                     }
+                    //if (!this._hotStandby) {
+                    //    if (element['location'].length === 2) {
+                    //        this._hostList = element['endpoint'];
+                    //        this._portList = element['port'];
+                    //        return;
+                    //    }
                 });
+                
+                if (this._hostList.length === 0) {
+                    this._hostList = ERT_services['services'][0]['endpoint'];
+                    this._portList = ERT_services['services'][0]['port'];
+                    console.log(`Cannot find location: ${this._location}.  Defaulting endpoing to: ${this._hostList}`);
+                }
 
                 if (this.isCallback(this._statusCb)) {
                     this._statusCb(this.status.getService, {
@@ -192,7 +199,6 @@ ERTRESTController.prototype.get_ERT_service = function (auth_obj) {
             }
         }
     }
-
 }
 
 //[Modify By Wasin W.]

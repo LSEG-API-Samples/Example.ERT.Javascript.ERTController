@@ -487,7 +487,7 @@ ERTWebSocketController.prototype._onClose = function (closeEvent) {
 //  Data message:   Refresh and update market data messages resulting from our item request
 //*********************************************************************************************************  
 ERTWebSocketController.prototype._onMessage = function (msg) 
-{
+{  
     // Ensure we have a valid message
     if (typeof (msg.data) === 'string' && msg.data.length > 0)
     {
