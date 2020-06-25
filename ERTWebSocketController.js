@@ -2,7 +2,7 @@
 // ERTWebSocketController
 //
 // The ERTWebSocketController is a generic interface supporting the ability to connect and receive real-time streaming market data from the
-// Elektron RealTime (ERT) services.  ERT services can be accessed directly via the Elektron Data Platform (EDP), locally through TREP or 
+// Elektron RealTime (ERT) services.  ERT services can be accessed directly via the Refinitiv Data Platform (RDP), locally through TREP or 
 // from the Eikon desktop. The controller is intentionally designed as a reusable interface allowing appplication communcation to work with 
 // any Javascript framework.
 //
@@ -22,7 +22,7 @@
 // TREP/ADS-specific session interface:
 //      ERTWebSocketController.connectADS(server, port, user, appId="256", position="127.0.0.1");
 //
-// EDP/ERT-specific session interface:
+// RDP/ERT-specific session interface:
 //      ERTWebSocketController.connectERT(server, port, access_token, appId="256", position="127.0.0.1");
 //      ERTWebSocketController.refreshERT(opt)
 //
@@ -30,8 +30,8 @@
 //      ERTWebSocketController.status
 //
 // Author:  Nick Zincone, Wasin Waeosri
-// Version: 2.0
-// Date:    October 2018.
+// Version: 2.0.1
+// Date:    June 2020.
 //****************************************************************************************************************************************** 
 
 
@@ -235,8 +235,8 @@ ERTWebSocketController.prototype.connectERT = function(server, port, access_toke
 // Initiate an asynchronous connection request to re-send a Login request message with refresh_token.  
 //
 // Parameters:
-//      opt.access_token   EDP Authentication gateway access token.  Required.
-//      opt.refresh_token  EDP Authentication gateway refresh token.  Required.
+//      opt.access_token   RDP Authentication gateway access token.  Required.
+//      opt.refresh_token  RDP Authentication gateway refresh token.  Required.
 //
 ERTWebSocketController.prototype.refreshERT = function(opt) {
     let seconds = '';

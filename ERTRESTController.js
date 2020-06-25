@@ -14,9 +14,9 @@
 // Status Events:
 //      ERTRESTController.status
 //
-// Author: Wasin Waeosri
-// Version: 1.0
-// Date:    October 2018.
+// Author:  Wasin Waeosri, Nick Zincone
+// Version: 1.0.1
+// Date:    June 2020.
 //**********************************************************************************************************************************
 
 //
